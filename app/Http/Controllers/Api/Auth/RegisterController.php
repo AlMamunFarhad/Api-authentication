@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Models\User;
+use App\Mail\VerifyEmail;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\RegisterRequest;
 
 class RegisterController extends Controller
@@ -24,7 +26,8 @@ class RegisterController extends Controller
 
        $token = $user->createToken('auth_token')->plainTextToken;
 
-
+       Mail::to($user)->send(new VerifyEmail($user));
+       
         return response()->json([
             'access_token' => $token,
             'token_type' => 'Bearer',

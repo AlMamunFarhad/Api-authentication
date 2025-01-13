@@ -1,16 +1,20 @@
 <?php
 
 // use App\Models\User;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 // use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\DashboardController;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+
 // use App\Http\Controllers\ProductController;
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+Route::get('/user', [UserController::class, 'user'])->middleware('auth:sanctum');
+Route::get('/dashboard', [DashboardController::class, 'dashboard'])->middleware('auth:sanctum', 'verified');
 require __DIR__.'/auth.php';
 // First Practice Api Authentication 
 // Route::get('/products', [ProductController::class, 'index']);
